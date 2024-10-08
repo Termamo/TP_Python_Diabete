@@ -6,14 +6,10 @@ class PDM:
         self.target_glucose = target_glucose
         self.history = []
 
-    def set_meal(self, carbs):
-        """Programmer un bolus pour un repas."""
-        bolus = self.pump.calculate_meal_bolus(carbs)
-        self.history.append(f"Bolus alimentaire: {bolus} U pour {carbs} g de glucides")
-        return bolus
-
-    def set_correction(self, current_glucose):
-        """Programmer un bolus de correction."""
-        bolus = self.pump.calculate_correction_bolus(current_glucose, self.target_glucose)
-        self.history.append(f"Bolus de correction: {bolus} U")
-        return bolus
+    def apply_new_config(self, config):
+        if 'basal_rates' in config:
+            self.pump.basal_rates = config['basal_rates']
+            self.history.append("Taux basaux configurés avec succès")
+        if 'insulin_to_carb_ratio' in config:
+            self.pump.insulin_to_carb_ratio = config['insulin_to_carb_ratio']
+            self.history.append("Ratio insuline/glucides configuré avec succès")

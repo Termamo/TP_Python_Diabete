@@ -1,11 +1,11 @@
 # src/main.py
 
-from Patient import Patient
-from InsulinPump import InsulinPump
-from cgm import CGM
-from ClosedLoopController import ClosedLoopController
-from pdm import PDM
-from Simulator import Simulator
+from src.Patient import Patient
+from src.InsulinPump import InsulinPump
+from src.cgm import CGM
+from src.ClosedLoopController import ClosedLoopController
+from src.pdm import PDM
+from src.Simulator import Simulator
 
 def main():
     # Initialisation des paramètres
