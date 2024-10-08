@@ -20,3 +20,4 @@ class PDM:
         message = f"Bolus alimentaire administré : {int(self.pump.bolus_delivered)} U pour {self.carbs} g de glucides"
         self.history.append(message)
         return message
+    
