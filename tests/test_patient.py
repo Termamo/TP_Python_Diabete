@@ -1,7 +1,14 @@
 # tests/test_patient.py
 
 import unittest
-from src.Patient import Patient
+import sys
+import os
+
+# Ajoute le chemin du dossier src à sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+from Patient import Patient
+
 
 class TestPatient(unittest.TestCase):
     def test_update_glucose_level(self):
