@@ -5,11 +5,18 @@ class PDM:
         self.pump = pump
         self.target_glucose = target_glucose
         self.history = []
+        self.carbs = 0
 
-    def apply_new_config(self, config):
-        if 'basal_rates' in config:
-            self.pump.basal_rates = config['basal_rates']
-            self.history.append("Taux basaux configurés avec succès")
-        if 'insulin_to_carb_ratio' in config:
-            self.pump.insulin_to_carb_ratio = config['insulin_to_carb_ratio']
-            self.history.append("Ratio insuline/glucides configuré avec succès")
+    def enter_carbs(self, carbs):
+        self.carbs = carbs
+
+    def calculate_bolus(self):
+        return self.carbs / self.pump.insulin_to_carb_ratio
+
+    def send_bolus_to_pump(self, bolus):
+        self.pump.bolus = bolus
+
+    def confirm_bolus(self):
+        message = f"Bolus alimentaire administré : {int(self.pump.bolus_delivered)} U pour {self.carbs} g de glucides"
+        self.history.append(message)
+        return message
