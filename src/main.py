@@ -1,5 +1,3 @@
-# src/main.py
-
 from Patient import Patient
 from InsulinPump import InsulinPump
 from cgm import CGM
@@ -7,33 +5,19 @@ from ClosedLoopController import ClosedLoopController
 from pdm import PDM
 from Simulator import Simulator
 
-def main():
-    # Initialisation des paramètres
-    initial_glucose = 150  # Glycémie initiale en mg/dL
-    insulin_sensitivity = 30  # Sensibilité à l'insuline (ISF)
-    carb_sensitivity = 5  # Sensibilité aux glucides (SCF)
-    
-    basal_rates = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  # Taux d'insuline basale
-    insulin_to_carb_ratio = 15  # Ratio Insuline/Glucides
-    target_glucose = 100  # Glycémie cible en mg/dL
-    
-    # Création des objets
-    patient = Patient(initial_glucose, insulin_sensitivity, carb_sensitivity)
-    pump = InsulinPump(basal_rates, insulin_to_carb_ratio, insulin_sensitivity)
-    cgm = CGM(measurement_interval=5)  # Mesure toutes les 5 minutes
-    controller = ClosedLoopController(target_glucose, pump, cgm)
-    pdm = PDM(pump, target_glucose)
-    
-    # Durée de la simulation (en heures)
-    duration = 24  # Simuler sur 24 heures
+# Initialiser les composants
+patient = Patient(initial_glucose=120, insulin_sensitivity=30, carb_sensitivity=5)
+pump = InsulinPump(basal_rates=[0.8, 0.6, 0.5, 0.7, 1.0, 1.2, 0.9, 0.8, 0.6, 0.5, 0.7, 1.0, 1.2, 0.9, 0.8, 0.6, 0.5, 0.7, 1.0, 1.2, 0.9,0.8, 0.6, 0.5], insulin_to_carb_ratio=10, insulin_sensitivity_factor=50)
+cgm = CGM(measurement_interval=5)
+controller = ClosedLoopController(target_glucose=100, pump=pump, cgm=cgm)
+pdm = PDM(pump=pump, target_glucose=100)
 
-    # Création et exécution de la simulation
-    simulator = Simulator(patient, pump, cgm, controller, pdm, duration)
-    simulator.run_simulation()
-    
-    # Affichage des résultats de la simulation
-    for log_entry in simulator.log:
-        print(log_entry)
+# Configurer la simulation
+simulator = Simulator(patient, pump, cgm, controller, pdm, duration=24)
 
-if __name__ == "__main__":
-    main()
+# Lancer la simulation
+simulator.run_simulation()
+
+# Afficher les résultats
+for log_entry in simulator.log:
+    print(log_entry)

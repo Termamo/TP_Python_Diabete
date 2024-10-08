@@ -1,7 +1,7 @@
 # tests/test_patient.py
 
 import unittest
-from src.patient import Patient
+from src.Patient import Patient
 
 class TestPatient(unittest.TestCase):
     def test_update_glucose_level(self):
